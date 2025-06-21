@@ -164,15 +164,31 @@ nav details details details details {
   margin-left: 2rem;
 }
 
-nav a {
+nav a, nav summary {
   display: block;
   color: inherit;
   text-decoration: none;
   padding: 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 nav a.active {
   font-weight: bold;
+}
+
+/* Mobile: Show full text when expanded */
+nav a.expanded, nav summary.expanded {
+  white-space: normal;
+  overflow: visible;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+@media(prefers-color-scheme: dark) {
+  nav a.expanded, nav summary.expanded {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 }
 
 pre {
@@ -300,7 +316,7 @@ def render_nav(node: Node, current_md: Optional[Path], root: Path, depth: int = 
     if node.is_dir:
         # Determine if this folder needs to be open
         open_attr = " open" if current_md and current_md.is_relative_to(node.path) else ""
-        parts = [f"<details{open_attr}{style_attr}><summary>{node.name}</summary>"]
+        parts = [f"<details{open_attr}{style_attr}><summary title=\"{node.name}\">{node.name}</summary>"]
         for child in node.children:
             parts.append(render_nav(child, current_md, root, depth + 1))
         parts.append("</details>")
@@ -309,7 +325,7 @@ def render_nav(node: Node, current_md: Optional[Path], root: Path, depth: int = 
         rel_md_path = node.path.relative_to(root)
         html_href = rel_md_path.with_suffix(".html")
         class_attr = " class=\"active\"" if current_md and rel_md_path == current_md.relative_to(root) else ""
-        return f"<a href=\"{html_href.as_posix()}\"{class_attr}{style_attr}>{node.name}</a>"
+        return f"<a href=\"{html_href.as_posix()}\"{class_attr}{style_attr} title=\"{node.name}\">{node.name}</a>"
 
 
 # ---------------------------------------------------------------------------
