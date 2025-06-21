@@ -64,6 +64,7 @@ TEMPLATE = """<!doctype html>
       navigator.clipboard.writeText(code).then(() => {{
         btn.textContent = 'Copied!';
         setTimeout(() => btn.textContent = 'Copy', 2000);
+        
       }});
     }}
 
