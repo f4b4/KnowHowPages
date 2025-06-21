@@ -44,6 +44,7 @@ TEMPLATE = """<!doctype html>
   <base href="{base_href}"/>
   <title>{title}</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="static/style.css"/>
 </head>
 <body>
