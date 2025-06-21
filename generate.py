@@ -48,6 +48,7 @@ TEMPLATE = """<!doctype html>
   <link rel="stylesheet" href="static/style.css"/>
 </head>
 <body>
+  <button class="menu-btn" onclick="toggleNav()">☰</button>
   <div class="layout">
     <nav class="sidebar">
       {nav}
@@ -64,6 +65,20 @@ TEMPLATE = """<!doctype html>
         setTimeout(() => btn.textContent = 'Copy', 2000);
       }});
     }}
+
+    function toggleNav() {{
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('open');
+    }}
+
+    document.addEventListener('DOMContentLoaded', () => {{
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.addEventListener('click', (e) => {{
+        if (e.target.tagName === 'A') {{
+          sidebar.classList.remove('open');
+        }}
+      }});
+    }});
   </script>
 </body>
 </html>"""
@@ -201,6 +216,45 @@ pre, code {
 
 .copy-btn:hover {
   opacity: 1;
+}
+
+/* -------------------------------------------------
+   Responsive sidebar and hamburger menu
+--------------------------------------------------*/
+.menu-btn {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.25rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--sidebar);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  opacity: 1;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+  }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    padding-top: 4rem;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
 }"""
 
 # ---------------------------------------------------------------------------
