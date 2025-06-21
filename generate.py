@@ -239,7 +239,9 @@ pre, code {
 
 @media (max-width: 768px) {
   .menu-btn {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .sidebar {
     position: fixed;
