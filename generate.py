@@ -32,6 +32,7 @@ from pygments.formatters import HtmlFormatter
 
 DEFAULT_INPUT_DIR = Path("content")
 DEFAULT_OUTPUT_DIR = Path("site")
+ASSETS_DIR = Path("assets")  # Folder with global assets to be copied verbatim
 
 # ---------------------------------------------------------------------------
 # HTML Template - IMPORTANT: Keep this template formatted with proper indentation
@@ -387,6 +388,17 @@ def generate_site(input_dir: Path, output_dir: Path):
             dest = output_dir / asset.relative_to(input_dir)
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(asset, dest)
+
+    # -----------------------------------------------------------
+    # Copy global assets (favicon, manifest, images, etc.)
+    # -----------------------------------------------------------
+    if ASSETS_DIR.exists():
+        for asset in ASSETS_DIR.rglob("*"):
+            if asset.is_file():
+                dest = output_dir / asset.relative_to(ASSETS_DIR)
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(asset, dest)
+                print(f"⇢ assets/{asset.relative_to(ASSETS_DIR)} → {dest.relative_to(output_dir)}")
 
     # Write index.html redirecting to first article (if any)
     first_page = next((p for p in input_dir.rglob("*.md")), None)
