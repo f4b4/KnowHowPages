@@ -164,6 +164,26 @@ nav details details details details {
   margin-left: 2rem;
 }
 
+/* Style for disclosure triangles */
+nav details > summary {
+  list-style-type: none;
+  position: relative;
+  cursor: pointer;
+}
+
+nav details > summary::before {
+  content: "▶";
+  display: inline-block;
+  width: 1em;
+  font-size: 0.8em;
+  margin-right: 0.2em;
+  transition: transform 0.2s;
+}
+
+nav details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
 nav a, nav summary {
   display: block;
   color: inherit;
