@@ -12,7 +12,7 @@
     sudo /usr/lib/openssh/sftp-server
     ```
 
-    or (on some ubuntu 24):
+    or (on ubuntu 24):
 
     ```bash
     sudo /usr/lib/sftp-server 
